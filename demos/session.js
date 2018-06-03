@@ -1,8 +1,8 @@
-const session = require('koa-session');
-const Koa = require('koa');
-const app = new Koa();
+const session = require('koa-session')
+const Koa = require('koa')
+const app = new Koa()
 
-app.keys = ['some secret hurr'];
+app.keys = ['some secret hurr']
 
 const CONFIG = {
   key: 'koa:sess', /** (string) cookie key (default is koa:sess) */
@@ -15,20 +15,20 @@ const CONFIG = {
   signed: true, /** (boolean) signed or not (default true) */
   rolling: false, /** (boolean) Force a session identifier cookie to be set on every response. The expiration is reset to the original maxAge, resetting the expiration countdown. (default is false) */
   renew: false, /** (boolean) renew session when session is nearly expired, so we can always keep user logged in. (default is false)*/
-};
+}
 
-app.use(session(CONFIG, app));
-// or if you prefer all default config, just use => app.use(session(app));
+app.use(session(CONFIG, app))
+// or if you prefer all default config, just use => app.use(session(app))
 
 app.use(ctx => {
   // ignore favicon
-  if (ctx.path === '/favicon.ico') return;
+  if (ctx.path === '/favicon.ico') return
 
-  let n = ctx.session.views || 0;
-  ctx.session.views = ++n;
-  ctx.body = ctx.session;
+  let n = ctx.session.views || 0
+  ctx.session.views = ++n
+  ctx.body = ctx.session
   ctx.type = 'json'
-});
+})
 
-app.listen(3000);
-console.log('listening on port 3000');
+app.listen(3000)
+console.log('listening on port 3000')
